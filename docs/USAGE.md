@@ -35,7 +35,7 @@ The dev server keeps running until you stop it with `Ctrl + C`.
 
 The app stores the current study position per subject. Re-entering a subject opens the last unfinished question, or the next unanswered question after it.
 
-On narrow screens, the sidebar starts collapsed and the question grid switches to compact status squares.
+On narrow screens, the sidebar starts collapsed while question numbers remain readable. Click the chapter title badge in the top-right area to open or collapse the sidebar.
 
 ## 🧯 If Dev Server Fails
 

@@ -4,32 +4,33 @@ type TopbarProps = {
   answeredCount: number;
   chapter: string;
   correctCount: number;
+  isSidebarOpen: boolean;
   questionCount: number;
   subjectName: string;
   onBackToSubjects: () => void;
   onResetChapter: () => void;
+  onToggleSidebar: () => void;
 };
 
 export function Topbar({
   answeredCount,
   chapter,
   correctCount,
+  isSidebarOpen,
   questionCount,
   subjectName,
   onBackToSubjects,
   onResetChapter,
+  onToggleSidebar,
 }: TopbarProps) {
   return (
     <header className="topbar">
       <button className="subject-home-button" onClick={onBackToSubjects} type="button">
+        <ArrowLeft size={15} />
+        <span className="subject-home-title">{subjectName}</span>
         <span className="subject-mark" aria-hidden="true">
           史
         </span>
-        <span>
-          <span className="subject-home-title">{subjectName}</span>
-          <span className="subject-home-subtitle">近代史纲要刷题</span>
-        </span>
-        <ArrowLeft size={15} />
       </button>
 
       <div className="topbar-progress">
@@ -42,9 +43,14 @@ export function Topbar({
         </button>
       </div>
 
-      <div className="chapter-badge" title={chapter}>
+      <button
+        className="chapter-badge"
+        onClick={onToggleSidebar}
+        title={isSidebarOpen ? `${chapter}，点击收起侧边栏` : `${chapter}，点击展开侧边栏`}
+        type="button"
+      >
         {chapter}
-      </div>
+      </button>
     </header>
   );
 }

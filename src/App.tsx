@@ -1,5 +1,4 @@
 import React from "react";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Sidebar } from "./components/Sidebar";
 import { SubjectSelector } from "./components/SubjectSelector";
 import { Topbar } from "./components/Topbar";
@@ -185,16 +184,6 @@ function SubjectQuiz({ isSidebarOpen, subject, onBackToSubjects, onToggleSidebar
 
   return (
     <main className={`app-shell ${isSidebarOpen ? "" : "is-sidebar-collapsed"}`}>
-      <button
-        className="sidebar-toggle-button"
-        onClick={onToggleSidebar}
-        type="button"
-        aria-label={isSidebarOpen ? "收起侧边栏" : "展开侧边栏"}
-        title={isSidebarOpen ? "收起侧边栏 (Shift+Esc)" : "展开侧边栏 (Alt+1)"}
-      >
-        {isSidebarOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
-      </button>
-
       {isSidebarOpen ? (
         <Sidebar
           chapters={subjectChapters}
@@ -212,7 +201,9 @@ function SubjectQuiz({ isSidebarOpen, subject, onBackToSubjects, onToggleSidebar
           answeredCount={answeredCount}
           chapter={chapter}
           correctCount={correctCount}
+          isSidebarOpen={isSidebarOpen}
           onBackToSubjects={onBackToSubjects}
+          onToggleSidebar={onToggleSidebar}
           questionCount={chapterQuestions.length}
           subjectName={subject.name}
           onResetChapter={() => resetChapter(chapter)}
