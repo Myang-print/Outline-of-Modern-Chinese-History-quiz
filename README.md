@@ -28,6 +28,7 @@
 - [`src/components/`](src/components/README.md): planned component boundaries.
 - [`src/data/`](src/data/README.md): generated frontend data.
 - [`src/lib/`](src/lib/README.md): frontend helper modules.
+- [`src/styles/`](src/styles/README.md): split CSS structure and update rules.
 - [`scripts/`](scripts/README.md): question-bank processing scripts.
 - [`data/`](data/README.md): raw, annotation, and processed data workflow.
 - [`data/raw/`](data/raw/README.md): raw source file rules.
