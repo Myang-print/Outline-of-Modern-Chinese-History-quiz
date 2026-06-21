@@ -22,6 +22,21 @@
 - `matrix.md`：实现记录矩阵。
 - `AGENT.md`：后续开发约束与接手说明。
 
+## Folder Guides
+
+- [`src/`](src/README.md): frontend source structure and update rules.
+- [`src/components/`](src/components/README.md): planned component boundaries.
+- [`src/data/`](src/data/README.md): generated frontend data.
+- [`src/lib/`](src/lib/README.md): frontend helper modules.
+- [`scripts/`](scripts/README.md): question-bank processing scripts.
+- [`data/`](data/README.md): raw, annotation, and processed data workflow.
+- [`data/raw/`](data/raw/README.md): raw source file rules.
+- [`data/annotations/`](data/annotations/README.md): explanation and exam-point annotation rules.
+- [`data/processed/`](data/processed/README.md): generated data outputs.
+- [`data/processed/chapters/`](data/processed/chapters/README.md): per-chapter generated JSON.
+- [`docs/`](docs/README.md): documentation structure.
+- [`docs/question-bank/`](docs/question-bank/README.md): generated review and study documents.
+
 ## 使用
 
 ```bash
