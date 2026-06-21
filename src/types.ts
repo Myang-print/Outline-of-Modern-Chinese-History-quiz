@@ -17,6 +17,8 @@ export type Question = {
     file: string;
     lines: number[];
   };
+  explanation: string;
+  examPoints: string[];
 };
 
 export type AnswerStatus = "unanswered" | "correct" | "incorrect";

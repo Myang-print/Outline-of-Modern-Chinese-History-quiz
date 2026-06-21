@@ -1,14 +1,16 @@
 {
   "source": "data/raw/中国近代史纲要题库-1.txt",
-  "totalQuestions": 942,
+  "totalQuestions": 941,
+  "excludedQuestions": 1,
+  "annotatedQuestions": 941,
   "totalIssues": 0,
   "chapters": [
     {
       "chapter": "综述 风云变幻的八十年",
-      "questionCount": 43,
+      "questionCount": 42,
       "issueCount": 0,
       "typeCounts": {
-        "single": 15,
+        "single": 14,
         "multiple": 15,
         "judge": 13
       }

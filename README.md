@@ -14,6 +14,7 @@
 ## 目录
 
 - `data/raw/`：原始 `.txt` 题库副本。
+- `data/annotations/`：按批次维护的题目解析和核心考点。
 - `data/processed/`：解析后的结构化题库 JSON 和汇总。
 - `docs/question-bank/`：分章检查报告与考前注意知识点。
 - `scripts/parse-question-bank.mjs`：题库解析脚本。
@@ -25,6 +26,8 @@
 
 ```bash
 npm install
+npm run parse:bank
+npm run annotate:remaining
 npm run parse:bank
 npm run dev
 ```
@@ -41,8 +44,22 @@ npm run build
 2. 运行 `npm run parse:bank`。
 3. 脚本会生成：
    - `data/processed/question-bank.json`
+   - `data/processed/chapters/*.json`
+   - `data/processed/excluded-questions.json`
    - `data/processed/summary.json`
    - `src/data/questionBank.json`
    - `docs/question-bank/*.md`
 
 解析脚本只做格式与一致性检查，不自动改答案。
+解析和核心考点从 `data/annotations/*.json` 合并进最终题库；可以按章节分批补充。
+精写解析文件优先保留，`npm run annotate:remaining` 会为未精写的章节生成基础解析和核心考点。
+
+## 分章复核
+
+- `data/processed/chapters/`：按章节拆分后的结构化 JSON，适合程序处理或逐章人工校对。
+- `docs/question-bank/*-review.md`：按章节生成的题干、选项、答案复核稿。
+- `docs/question-bank/*-check.md`：格式与一致性检查报告。
+- `docs/question-bank/*-notes.md`：基于题库提炼的考前注意知识点。
+- `data/processed/excluded-questions.json`：被明确排除的非练习题，例如课程属性说明题。
+- `data/annotations/`：人工维护的解析批次文件，字段为 `explanation` 和 `examPoints`。
+- `scripts/generate-auto-annotations.mjs`：为尚未精写的题目生成基础解析；后续精修时可以用章节注释文件替换。

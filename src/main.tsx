@@ -185,6 +185,27 @@ function App() {
               )}
             </div>
 
+            {currentRecord && (current.explanation || current.examPoints.length > 0) ? (
+              <section className="analysis-box">
+                {current.explanation ? (
+                  <div>
+                    <h4>解析</h4>
+                    <p>{current.explanation}</p>
+                  </div>
+                ) : null}
+                {current.examPoints.length > 0 ? (
+                  <div>
+                    <h4>核心考点</h4>
+                    <ul>
+                      {current.examPoints.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </section>
+            ) : null}
+
             <footer className="question-actions">
               <button
                 className="secondary-button"

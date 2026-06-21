@@ -1,9 +1,11 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
 const rawFile = path.join(root, "data/raw/中国近代史纲要题库-1.txt");
 const processedDir = path.join(root, "data/processed");
+const processedChaptersDir = path.join(processedDir, "chapters");
+const annotationsDir = path.join(root, "data/annotations");
 const docsDir = path.join(root, "docs/question-bank");
 const srcDataDir = path.join(root, "src/data");
 
@@ -18,6 +20,15 @@ const ANSWER_RE = /正确答案\s*[：:]\s*([A-D]{1,4})/;
 const CHAPTER_RE = /^(综述\s+.+|第[一二三四五六七八九十]+章\s+.+)$/;
 const VOLUME_RE = /^[上中下]编\s+.+$/;
 const SECTION_RE = /^[一二三四五六七八九十]+、\s*.+$/;
+const EXCLUDED_QUESTIONS = [
+  {
+    reason: "课程属性说明题，不属于中国近现代史知识点练习",
+    chapter: "综述 风云变幻的八十年",
+    type: "single",
+    number: 1,
+    stemIncludes: "《中国近现代史纲要》课程",
+  },
+];
 
 function normalizeLine(line) {
   return line
@@ -145,6 +156,40 @@ function validateQuestion(question) {
   return issues;
 }
 
+function shouldExcludeQuestion(question) {
+  return EXCLUDED_QUESTIONS.find((rule) => {
+    return (
+      question.chapter === rule.chapter &&
+      question.type === rule.type &&
+      question.number === rule.number &&
+      question.stem.includes(rule.stemIncludes)
+    );
+  });
+}
+
+async function loadAnnotations() {
+  const annotations = new Map();
+  let files = [];
+  try {
+    files = await readdir(annotationsDir);
+  } catch {
+    return annotations;
+  }
+
+  for (const file of files.filter((name) => name.endsWith(".json"))) {
+    const content = await readFile(path.join(annotationsDir, file), "utf8");
+    const records = JSON.parse(content);
+    for (const record of records) {
+      annotations.set(record.id, {
+        explanation: record.explanation || "",
+        examPoints: Array.isArray(record.examPoints) ? record.examPoints : [],
+      });
+    }
+  }
+
+  return annotations;
+}
+
 function slugify(text) {
   return text
     .replace(/\s+/g, "-")
@@ -225,6 +270,34 @@ function buildChapterReport(chapter, questions, issues) {
   return `${lines.join("\n")}\n`;
 }
 
+function buildChapterReview(chapter, questions) {
+  const lines = [
+    `# ${chapter} 题库复核稿`,
+    "",
+    "> 本文件按解析后的题目生成，用于分章检查题干、选项和答案。页码、空行等 PDF 转文本噪声已在解析阶段忽略。",
+    "",
+  ];
+
+  for (const question of questions) {
+    lines.push(`## ${question.id}`);
+    lines.push("");
+    lines.push(`- 类型：${question.type}`);
+    lines.push(`- 原题号：${question.number}`);
+    lines.push(`- 来源行：${question.source.lines.join(", ")}`);
+    lines.push(`- 题干：${question.stem}`);
+    lines.push("- 选项：");
+    for (const option of question.options) {
+      lines.push(`  - ${option.label}. ${option.text}`);
+    }
+    lines.push(`- 答案：${question.answer.join("")}`);
+    if (question.explanation) lines.push(`- 解析：${question.explanation}`);
+    if (question.examPoints?.length) lines.push(`- 核心考点：${question.examPoints.join("；")}`);
+    lines.push("");
+  }
+
+  return `${lines.join("\n")}\n`;
+}
+
 function buildKnowledgeNotes(chapter, questions) {
   const keywords = collectKeywords(questions);
   const years = collectYears(questions);
@@ -271,8 +344,11 @@ function countBy(items, key) {
 
 async function main() {
   await mkdir(processedDir, { recursive: true });
+  await mkdir(processedChaptersDir, { recursive: true });
+  await mkdir(annotationsDir, { recursive: true });
   await mkdir(docsDir, { recursive: true });
   await mkdir(srcDataDir, { recursive: true });
+  const annotations = await loadAnnotations();
 
   const raw = await readFile(rawFile, "utf8");
   const lines = raw.split(/\r?\n/).map((text, index) => ({
@@ -331,8 +407,37 @@ async function main() {
   }
   flushBlock();
 
-  const issues = [];
+  const excluded = [];
+  const includedQuestions = [];
   for (const question of questions) {
+    const exclusion = shouldExcludeQuestion(question);
+    if (exclusion) {
+      excluded.push({
+        id: question.id,
+        chapter: question.chapter,
+        type: question.type,
+        number: question.number,
+        stem: question.stem,
+        reason: exclusion.reason,
+        source: question.source,
+      });
+    } else {
+      includedQuestions.push(question);
+    }
+  }
+
+  const renumberedQuestions = includedQuestions.map((question, index) => {
+    const annotation = annotations.get(question.id);
+    return {
+      ...question,
+      sequence: index + 1,
+      explanation: annotation?.explanation || "",
+      examPoints: annotation?.examPoints || [],
+    };
+  });
+
+  const issues = [];
+  for (const question of renumberedQuestions) {
     const questionIssues = validateQuestion(question);
     if (questionIssues.length > 0) {
       issues.push({
@@ -344,13 +449,15 @@ async function main() {
     }
   }
 
-  const chapters = [...new Set(questions.map((question) => question.chapter))];
+  const chapters = [...new Set(renumberedQuestions.map((question) => question.chapter))];
   const summary = {
     source: "data/raw/中国近代史纲要题库-1.txt",
-    totalQuestions: questions.length,
+    totalQuestions: renumberedQuestions.length,
+    excludedQuestions: excluded.length,
+    annotatedQuestions: renumberedQuestions.filter((question) => question.explanation || question.examPoints.length > 0).length,
     totalIssues: issues.length,
     chapters: chapters.map((chapterName) => {
-      const chapterQuestions = questions.filter((question) => question.chapter === chapterName);
+      const chapterQuestions = renumberedQuestions.filter((question) => question.chapter === chapterName);
       const chapterIssues = issues.filter((issue) => issue.chapter === chapterName);
       return {
         chapter: chapterName,
@@ -361,19 +468,23 @@ async function main() {
     }),
   };
 
-  await writeFile(path.join(processedDir, "question-bank.json"), `${JSON.stringify(questions, null, 2)}\n`, "utf8");
+  await writeFile(path.join(processedDir, "question-bank.json"), `${JSON.stringify(renumberedQuestions, null, 2)}\n`, "utf8");
   await writeFile(path.join(processedDir, "summary.json"), `${JSON.stringify(summary, null, 2)}\n`, "utf8");
-  await writeFile(path.join(srcDataDir, "questionBank.json"), `${JSON.stringify(questions, null, 2)}\n`, "utf8");
+  await writeFile(path.join(processedDir, "excluded-questions.json"), `${JSON.stringify(excluded, null, 2)}\n`, "utf8");
+  await writeFile(path.join(srcDataDir, "questionBank.json"), `${JSON.stringify(renumberedQuestions, null, 2)}\n`, "utf8");
 
   for (const chapterName of chapters) {
-    const chapterQuestions = questions.filter((question) => question.chapter === chapterName);
+    const chapterQuestions = renumberedQuestions.filter((question) => question.chapter === chapterName);
     const chapterIssues = issues.filter((issue) => issue.chapter === chapterName);
     const slug = slugify(chapterName);
+    await writeFile(path.join(processedChaptersDir, `${slug}.json`), `${JSON.stringify(chapterQuestions, null, 2)}\n`, "utf8");
     await writeFile(path.join(docsDir, `${slug}-check.md`), buildChapterReport(chapterName, chapterQuestions, chapterIssues), "utf8");
+    await writeFile(path.join(docsDir, `${slug}-review.md`), buildChapterReview(chapterName, chapterQuestions), "utf8");
     await writeFile(path.join(docsDir, `${slug}-notes.md`), buildKnowledgeNotes(chapterName, chapterQuestions), "utf8");
   }
 
-  console.log(`Parsed ${questions.length} questions across ${chapters.length} chapters.`);
+  console.log(`Parsed ${renumberedQuestions.length} questions across ${chapters.length} chapters.`);
+  console.log(`Excluded ${excluded.length} non-practice questions.`);
   console.log(`Found ${issues.length} format/consistency issues.`);
 }
 
