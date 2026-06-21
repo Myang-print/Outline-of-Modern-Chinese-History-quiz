@@ -1,0 +1,138 @@
+{
+  "generatedAt": "2026-06-21T10:31:01.021Z",
+  "source": "data/raw/中国近代史纲要题库-1.txt",
+  "totalQuestions": 942,
+  "totalIssues": 0,
+  "chapters": [
+    {
+      "chapter": "综述 风云变幻的八十年",
+      "questionCount": 43,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 15,
+        "multiple": 15,
+        "judge": 13
+      }
+    },
+    {
+      "chapter": "第一章 反对外国侵略的斗争",
+      "questionCount": 65,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 24,
+        "multiple": 18,
+        "judge": 23
+      }
+    },
+    {
+      "chapter": "第二章 对国家出路的早期探索",
+      "questionCount": 99,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 42,
+        "multiple": 33,
+        "judge": 24
+      }
+    },
+    {
+      "chapter": "第三章 辛亥革命与君主专制制度的终结",
+      "questionCount": 81,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 36,
+        "multiple": 19,
+        "judge": 26
+      }
+    },
+    {
+      "chapter": "综述 翻天覆地的三十年",
+      "questionCount": 38,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 15,
+        "multiple": 10,
+        "judge": 13
+      }
+    },
+    {
+      "chapter": "第四章 开天辟地的大事变",
+      "questionCount": 84,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 36,
+        "multiple": 20,
+        "judge": 28
+      }
+    },
+    {
+      "chapter": "第五章 中国革命的新道路",
+      "questionCount": 71,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 30,
+        "multiple": 20,
+        "judge": 21
+      }
+    },
+    {
+      "chapter": "第六章 中华民族的抗日战争",
+      "questionCount": 126,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 35,
+        "multiple": 38,
+        "judge": 53
+      }
+    },
+    {
+      "chapter": "第七章 为新中国而奋斗",
+      "questionCount": 107,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 33,
+        "multiple": 25,
+        "judge": 49
+      }
+    },
+    {
+      "chapter": "综述 辉煌的历史征程",
+      "questionCount": 33,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 11,
+        "multiple": 12,
+        "judge": 10
+      }
+    },
+    {
+      "chapter": "第八章 社会主义基本制度在中国的确立",
+      "questionCount": 54,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 15,
+        "multiple": 13,
+        "judge": 26
+      }
+    },
+    {
+      "chapter": "第九章 社会主义建设在探索中曲折发展",
+      "questionCount": 78,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 19,
+        "multiple": 20,
+        "judge": 39
+      }
+    },
+    {
+      "chapter": "第十章 改革开放与现代化建设新时期",
+      "questionCount": 63,
+      "issueCount": 0,
+      "typeCounts": {
+        "single": 28,
+        "multiple": 13,
+        "judge": 22
+      }
+    }
+  ]
+}
