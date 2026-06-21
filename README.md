@@ -50,12 +50,12 @@ npm run dev
 `npm run dev` 正常启动后，终端会持续运行并显示类似：
 
 ```text
-Local: http://localhost:5173/
+Local: http://127.0.0.1:4173/
 ```
 
 打开这个地址即可看到 App。终端不会自动退出；要停止服务，按 `Ctrl + C`。
 
-如果 `npm run dev` 没有显示网址，或遇到端口/权限问题，可以使用生产预览：
+项目显式使用 `127.0.0.1:4173`，避免部分 Windows 环境把 `localhost` 解析到 IPv6 `::1:5173` 后出现 `EACCES`。如果 `npm run dev` 仍然遇到端口/权限问题，可以使用生产预览：
 
 ```bash
 npm run build
