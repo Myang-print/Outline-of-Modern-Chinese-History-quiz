@@ -7,8 +7,9 @@ type QuestionPanelProps = {
   currentRecord?: ProgressRecord;
   draftSelection: string[];
   onAnswer: (selected: string[]) => void;
+  onNextQuestion: () => void;
   onOptionClick: (label: string) => void;
-  onSelectQuestion: (questionId: string) => void;
+  onPreviousQuestion: () => void;
   question: Question;
   questionCount: number;
   questionIndex: number;
@@ -20,8 +21,9 @@ export function QuestionPanel({
   currentRecord,
   draftSelection,
   onAnswer,
+  onNextQuestion,
   onOptionClick,
-  onSelectQuestion,
+  onPreviousQuestion,
   question,
   questionCount,
   questionIndex,
@@ -93,16 +95,18 @@ export function QuestionPanel({
         <button
           className="secondary-button"
           disabled={questionIndex <= 0}
-          onClick={() => onSelectQuestion(questions[questionIndex - 1].id)}
+          onClick={onPreviousQuestion}
           type="button"
+          title="上一题 (←)"
         >
           上一题
         </button>
         <button
           className="secondary-button"
           disabled={questionIndex >= questions.length - 1}
-          onClick={() => onSelectQuestion(questions[questionIndex + 1].id)}
+          onClick={onNextQuestion}
           type="button"
+          title="下一题 (→)"
         >
           下一题
         </button>

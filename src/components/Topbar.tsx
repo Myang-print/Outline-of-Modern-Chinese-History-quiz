@@ -21,20 +21,30 @@ export function Topbar({
 }: TopbarProps) {
   return (
     <header className="topbar">
-      <div>
-        <button className="back-button" onClick={onBackToSubjects} type="button">
-          <ArrowLeft size={15} />
-          {subjectName}
-        </button>
-        <p className="chapter-name">{chapter}</p>
+      <button className="subject-home-button" onClick={onBackToSubjects} type="button">
+        <span className="subject-mark" aria-hidden="true">
+          史
+        </span>
+        <span>
+          <span className="subject-home-title">{subjectName}</span>
+          <span className="subject-home-subtitle">近代史纲要刷题</span>
+        </span>
+        <ArrowLeft size={15} />
+      </button>
+
+      <div className="topbar-progress">
         <h2>
           已完成 {answeredCount}/{questionCount}，正确 {correctCount}
         </h2>
+        <button className="ghost-button" onClick={onResetChapter} type="button">
+          <RotateCcw size={16} />
+          清空本专题记录
+        </button>
       </div>
-      <button className="ghost-button" onClick={onResetChapter} type="button">
-        <RotateCcw size={16} />
-        清空本专题记录
-      </button>
+
+      <div className="chapter-badge" title={chapter}>
+        {chapter}
+      </div>
     </header>
   );
 }

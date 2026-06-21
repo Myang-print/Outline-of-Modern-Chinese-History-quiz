@@ -1,3 +1,5 @@
+import React from "react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import type { AnswerStatus, Question } from "../types";
 
 type SidebarProps = {
@@ -8,7 +10,6 @@ type SidebarProps = {
   onSelectChapter: (chapter: string) => void;
   onSelectQuestion: (questionId: string) => void;
   statusForQuestion: (question: Question) => AnswerStatus;
-  totalQuestions: number;
 };
 
 export function Sidebar({
@@ -19,35 +20,51 @@ export function Sidebar({
   onSelectChapter,
   onSelectQuestion,
   statusForQuestion,
-  totalQuestions,
 }: SidebarProps) {
+  const [expandedChapters, setExpandedChapters] = React.useState<Set<string>>(() => new Set([currentChapter]));
+
+  React.useEffect(() => {
+    setExpandedChapters((expanded) => new Set(expanded).add(currentChapter));
+  }, [currentChapter]);
+
+  function toggleChapter(chapter: string) {
+    setExpandedChapters((expanded) => {
+      const next = new Set(expanded);
+      if (next.has(chapter)) {
+        next.delete(chapter);
+      } else {
+        next.add(chapter);
+      }
+      return next;
+    });
+  }
+
   return (
     <aside className="sidebar" aria-label="专题与题号">
-      <div className="brand">
-        <span className="brand-mark">史</span>
-        <div>
-          <h1>近代史纲要刷题</h1>
-          <p>{totalQuestions} 道题</p>
-        </div>
-      </div>
-
       <nav className="chapter-list">
         {chapters.map((chapter) => {
           const chapterItems = getChapterQuestions(chapter);
           const done = chapterItems.filter((question) => statusForQuestion(question) !== "unanswered").length;
+          const isExpanded = expandedChapters.has(chapter);
           return (
             <section className="chapter-group" key={chapter}>
-              <button
-                className={`chapter-button ${chapter === currentChapter ? "is-active" : ""}`}
-                onClick={() => onSelectChapter(chapter)}
-                type="button"
-              >
-                <span>{chapter}</span>
-                <strong>
-                  {done}/{chapterItems.length}
-                </strong>
-              </button>
-              {chapter === currentChapter ? (
+              <div className={`chapter-row ${chapter === currentChapter ? "is-active" : ""}`}>
+                <button className="chapter-button" onClick={() => onSelectChapter(chapter)} type="button">
+                  <span>{chapter}</span>
+                  <strong>
+                    {done}/{chapterItems.length}
+                  </strong>
+                </button>
+                <button
+                  aria-label={isExpanded ? `收起 ${chapter}` : `展开 ${chapter}`}
+                  className="chapter-collapse-button"
+                  onClick={() => toggleChapter(chapter)}
+                  type="button"
+                >
+                  {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                </button>
+              </div>
+              {isExpanded ? (
                 <div className="question-grid">
                   {chapterItems.map((question, index) => (
                     <button
@@ -58,8 +75,9 @@ export function Sidebar({
                       onClick={() => onSelectQuestion(question.id)}
                       type="button"
                       title={`第 ${question.number} 题`}
+                      aria-label={`${chapter} 第 ${question.number} 题，${statusForQuestion(question)}`}
                     >
-                      {index + 1}
+                      <span>{index + 1}</span>
                     </button>
                   ))}
                 </div>

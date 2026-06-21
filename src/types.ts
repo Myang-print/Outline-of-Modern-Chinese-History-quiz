@@ -46,3 +46,8 @@ export type SubjectProgressSummary = {
   correctCount: number;
   lastAnsweredAt?: string;
 };
+
+export type StudyPosition = {
+  chapter: string;
+  questionId: string;
+};

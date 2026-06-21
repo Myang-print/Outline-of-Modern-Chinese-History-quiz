@@ -24,6 +24,19 @@ http://127.0.0.1:4173/
 
 The dev server keeps running until you stop it with `Ctrl + C`.
 
+## ⌨️ Study Controls
+
+- `←` / `→`: Previous or next question.
+- `A` to `D`: Select the matching answer option.
+- `1` to `9`: Select the matching option by position.
+- `Enter`: Submit a multiple-choice question.
+- `Alt + 1`: Open the sidebar.
+- `Shift + Esc`: Collapse the sidebar.
+
+The app stores the current study position per subject. Re-entering a subject opens the last unfinished question, or the next unanswered question after it.
+
+On narrow screens, the sidebar starts collapsed and the question grid switches to compact status squares.
+
 ## 🧯 If Dev Server Fails
 
 Some Windows environments reject Vite's default `localhost` / IPv6 binding. This project binds dev mode to `127.0.0.1:4173`.

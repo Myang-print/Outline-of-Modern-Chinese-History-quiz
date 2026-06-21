@@ -1,42 +1,15 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding: 24px 18px;
+  gap: 16px;
+  min-height: 100vh;
+  padding: 20px 18px;
   border-right: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(16px);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px;
-}
-
-.brand-mark {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border-radius: 12px;
-  color: #fff;
-  background: #1d4ed8;
-  font-weight: 800;
-}
-
-.brand h1 {
-  margin: 0;
-  font-size: 18px;
-  line-height: 1.25;
-}
-
-.brand p,
-.chapter-name {
-  margin: 4px 0 0;
-  color: var(--muted);
-  font-size: 13px;
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease;
 }
 
 .chapter-list {
@@ -53,23 +26,34 @@
   gap: 10px;
 }
 
-.chapter-button {
+.chapter-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  width: 100%;
   border: 1px solid transparent;
   border-radius: 12px;
-  padding: 10px 12px;
   color: var(--text);
   background: transparent;
-  cursor: pointer;
-  text-align: left;
   transition:
     background 180ms ease,
     border-color 180ms ease,
     color 180ms ease;
+}
+
+.chapter-button {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  border: 0;
+  padding: 10px 0 10px 12px;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
 }
 
 .chapter-button span {
@@ -85,11 +69,28 @@
   font-weight: 700;
 }
 
-.chapter-button:hover,
-.chapter-button.is-active {
+.chapter-row:hover,
+.chapter-row.is-active {
   border-color: #bfd2ff;
   background: var(--accent-soft);
   color: #1742aa;
+}
+
+.chapter-collapse-button {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 34px;
+  min-height: 40px;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.chapter-collapse-button:hover {
+  color: var(--accent);
 }
 
 .question-grid {
@@ -118,6 +119,10 @@
 
 .question-dot:hover {
   transform: translateY(-1px);
+}
+
+.question-dot span {
+  line-height: 1;
 }
 
 .question-dot.is-current {

@@ -24,4 +24,8 @@
 | Subject entry page | Done | `src/components/SubjectSelector.tsx` provides the multi-subject app entry |
 | Subject-scoped progress | Done | `quiz-progress:${subjectId}:v1` localStorage key with legacy migration |
 | Multi-subject roadmap | Done | `docs/ROADMAP.md` documents the expansion path |
+| Responsive sidebar | Done | Sidebar auto-collapses on narrow screens and supports manual toggle |
+| Chapter collapse | Done | Each chapter can show or hide its question grid |
+| Study position restore | Done | Re-entering a subject opens the last unfinished question flow |
+| Keyboard shortcuts | Done | Arrow, option, Enter, and sidebar shortcuts wired in `src/App.tsx` |
 | Build verification | Done | `npm run build` passed |

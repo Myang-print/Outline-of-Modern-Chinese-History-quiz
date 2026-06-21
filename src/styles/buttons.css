@@ -1,5 +1,4 @@
 .ghost-button,
-.back-button,
 .primary-button,
 .secondary-button {
   display: inline-flex;
@@ -21,20 +20,6 @@
   border: 1px solid var(--border);
   color: #344054;
   background: var(--surface);
-}
-
-.back-button {
-  min-height: 32px;
-  margin: 0 0 8px;
-  padding: 0;
-  border: 0;
-  color: var(--muted);
-  background: transparent;
-  font-size: 14px;
-}
-
-.back-button:hover {
-  color: var(--accent);
 }
 
 .ghost-button:hover,
