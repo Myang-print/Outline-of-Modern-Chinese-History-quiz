@@ -1,20 +1,38 @@
 import type { ProgressRecord, ProgressState, Question } from "../types";
+import { MODERN_HISTORY_SUBJECT_ID } from "./subjects";
 
-const STORAGE_KEY = "modern-history-quiz-progress:v1";
+const LEGACY_STORAGE_KEY = "modern-history-quiz-progress:v1";
 
-export function loadProgress(): ProgressState {
+export function progressStorageKey(subjectId: string) {
+  return `quiz-progress:${subjectId}:v1`;
+}
+
+function parseProgress(raw: string | null): ProgressState {
+  if (!raw) return {};
+  const parsed = JSON.parse(raw);
+  return parsed && typeof parsed === "object" ? parsed : {};
+}
+
+export function loadProgress(subjectId: string): ProgressState {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === "object" ? parsed : {};
+    const storageKey = progressStorageKey(subjectId);
+    const progress = parseProgress(window.localStorage.getItem(storageKey));
+    if (Object.keys(progress).length > 0 || subjectId !== MODERN_HISTORY_SUBJECT_ID) {
+      return progress;
+    }
+
+    const legacyProgress = parseProgress(window.localStorage.getItem(LEGACY_STORAGE_KEY));
+    if (Object.keys(legacyProgress).length > 0) {
+      window.localStorage.setItem(storageKey, JSON.stringify(legacyProgress));
+    }
+    return legacyProgress;
   } catch {
     return {};
   }
 }
 
-export function saveProgress(progress: ProgressState) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+export function saveProgress(subjectId: string, progress: ProgressState) {
+  window.localStorage.setItem(progressStorageKey(subjectId), JSON.stringify(progress));
 }
 
 export function isCorrectAnswer(selected: string[], answer: string[]) {

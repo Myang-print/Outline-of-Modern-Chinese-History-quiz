@@ -1,3 +1,5 @@
+export const DEFAULT_SUBJECT_ID = "modern-history";
+
 export const TYPE_LABELS = [
   { pattern: /^一、\s*单项选择题/, type: "single", title: "单项选择题" },
   { pattern: /^二、\s*多项选择题/, type: "multiple", title: "多项选择题" },
@@ -19,4 +21,3 @@ export const EXCLUDED_QUESTIONS = [
     stemIncludes: "《中国近现代史纲要》课程",
   },
 ];
-

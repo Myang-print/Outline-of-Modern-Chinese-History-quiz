@@ -6,12 +6,16 @@ export function statusFor(question: Question, progress: ProgressState): AnswerSt
   return progress[question.id]?.status ?? "unanswered";
 }
 
-export function useQuizProgress(allQuestions: Question[]) {
-  const [progress, setProgress] = React.useState<ProgressState>(() => loadProgress());
+export function useQuizProgress(subjectId: string, allQuestions: Question[]) {
+  const [progress, setProgress] = React.useState<ProgressState>(() => loadProgress(subjectId));
+
+  React.useEffect(() => {
+    setProgress(loadProgress(subjectId));
+  }, [subjectId]);
 
   function updateProgress(next: ProgressState) {
     setProgress(next);
-    saveProgress(next);
+    saveProgress(subjectId, next);
   }
 
   function answerQuestion(question: Question | undefined, selected: string[]) {

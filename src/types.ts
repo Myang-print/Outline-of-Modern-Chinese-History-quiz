@@ -1,5 +1,14 @@
 export type QuestionType = "single" | "multiple" | "judge";
 
+export type Subject = {
+  id: string;
+  name: string;
+  description: string;
+  questionCount: number;
+  chapterCount: number;
+  dataPath: string;
+};
+
 export type Option = {
   label: string;
   text: string;
@@ -7,6 +16,7 @@ export type Option = {
 
 export type Question = {
   id: string;
+  subjectId: string;
   chapter: string;
   type: QuestionType;
   number: number;
@@ -30,3 +40,9 @@ export type ProgressRecord = {
 };
 
 export type ProgressState = Record<string, ProgressRecord>;
+
+export type SubjectProgressSummary = {
+  answeredCount: number;
+  correctCount: number;
+  lastAnsweredAt?: string;
+};

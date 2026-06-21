@@ -1,14 +1,20 @@
 import React from "react";
-import { chapters, getQuestionsByChapter, questions } from "../lib/questions";
-import type { ProgressState } from "../types";
+import type { ProgressState, Question } from "../types";
 
-export function useQuestionNavigation(progress: ProgressState) {
+export function useQuestionNavigation(questions: Question[], chapters: string[], progress: ProgressState) {
   const [chapter, setChapter] = React.useState(() => chapters[0] ?? "");
-  const chapterQuestions = React.useMemo(() => getQuestionsByChapter(chapter), [chapter]);
+  const chapterQuestions = React.useMemo(
+    () => questions.filter((question) => question.chapter === chapter),
+    [chapter, questions],
+  );
   const [questionId, setQuestionId] = React.useState(() => chapterQuestions[0]?.id ?? "");
   const current = chapterQuestions.find((question) => question.id === questionId) ?? chapterQuestions[0] ?? questions[0];
   const currentIndex = chapterQuestions.findIndex((question) => question.id === current?.id);
   const [draftSelection, setDraftSelection] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    setChapter((currentChapter) => (chapters.includes(currentChapter) ? currentChapter : (chapters[0] ?? "")));
+  }, [chapters]);
 
   React.useEffect(() => {
     if (!chapterQuestions.some((question) => question.id === questionId)) {

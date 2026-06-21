@@ -6,6 +6,7 @@ Project documentation and generated review materials.
 
 - `USAGE.md`: Local startup, preview, build, and verification commands.
 - `QUESTION_BANK_PIPELINE.md`: Raw data, annotation, generated output, and maintenance workflow.
+- `ROADMAP.md`: Multi-subject expansion and long-term optimization plan.
 - `question-bank/`: Generated question-bank reports, review drafts, and study notes.
 
 ## Update Rules

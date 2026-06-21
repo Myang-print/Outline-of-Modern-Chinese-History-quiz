@@ -5,6 +5,7 @@
 ## ✨ Features
 
 - 🧭 按章节/专题浏览题目。
+- 📚 支持多科目入口，当前已注册《中国近现代史纲要》。
 - ✅ 支持单选题、多选题、判断题。
 - ⚡ 作答后即时判断正误，答错时显示正确答案。
 - 🎯 答题后展示简明解析和考试核心考点。
@@ -48,12 +49,6 @@ http://127.0.0.1:4173/
 | `npm run preview:local`      | 预览`npm run build` 生成的生产版本          | `dev` 不可用或想检查构建产物时 |
 | `npm run annotate:remaining` | 为未精写题目生成基础解析                    | 原始题库或注释规则变化后       |
 | `npm run parse:bank`         | 从题库源数据生成 App 使用的 JSON 和复核文档 | 修改题库、注释或解析脚本后     |
-
-### 🏗️ What is a production build?
-
-`npm run build` 会检查 TypeScript 类型，并把源码打包成可以部署或预览的静态文件，输出到 `dist/`。
-
-平时开发和刷题用 `npm run dev`。准备提交代码、确认项目能被正式打包时，再运行 `npm run build`。
 
 ### 🧯 Backup Preview
 
@@ -115,12 +110,14 @@ Detailed folder guides:
 
 - [Usage Guide](docs/USAGE.md): local startup, build, preview, and command explanations.
 - [Question Bank Pipeline](docs/QUESTION_BANK_PIPELINE.md): raw text, annotations, generated JSON, reports, and review files.
+- [Roadmap](docs/ROADMAP.md): multi-subject expansion and long-term optimization plan.
 - [Implementation Matrix](matrix.md): current implementation status.
 
 ## 📌 Current Data Status
 
 - 941 practice questions.
 - 13 chapters/topics.
+- 1 registered subject: 中国近现代史纲要.
 - 941 questions include explanations and exam points.
 - 1 non-practice course-description question is excluded.
 - 0 format/consistency issues in the latest generated summary.
@@ -128,5 +125,6 @@ Detailed folder guides:
 ## 📝 Notes
 
 - The app reads generated JSON; it does not parse raw `.txt` in the browser.
+- Progress is stored per subject with `quiz-progress:${subjectId}:v1`.
 - Generated files under `data/processed/`, `src/data/`, and `docs/question-bank/` should be regenerated through scripts instead of edited by hand.
 - `npm run dev` binds to `127.0.0.1:4173` to avoid Windows environments where `localhost` resolves to IPv6 `::1` and fails with `EACCES`.

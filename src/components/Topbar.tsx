@@ -1,17 +1,31 @@
-import { RotateCcw } from "lucide-react";
+import { ArrowLeft, RotateCcw } from "lucide-react";
 
 type TopbarProps = {
   answeredCount: number;
   chapter: string;
   correctCount: number;
   questionCount: number;
+  subjectName: string;
+  onBackToSubjects: () => void;
   onResetChapter: () => void;
 };
 
-export function Topbar({ answeredCount, chapter, correctCount, questionCount, onResetChapter }: TopbarProps) {
+export function Topbar({
+  answeredCount,
+  chapter,
+  correctCount,
+  questionCount,
+  subjectName,
+  onBackToSubjects,
+  onResetChapter,
+}: TopbarProps) {
   return (
     <header className="topbar">
       <div>
+        <button className="back-button" onClick={onBackToSubjects} type="button">
+          <ArrowLeft size={15} />
+          {subjectName}
+        </button>
         <p className="chapter-name">{chapter}</p>
         <h2>
           已完成 {answeredCount}/{questionCount}，正确 {correctCount}

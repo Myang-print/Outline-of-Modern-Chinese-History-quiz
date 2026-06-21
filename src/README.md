@@ -8,7 +8,7 @@ Frontend application source for the quiz app.
 - `App.tsx`: App-level composition that wires question data, hooks, and UI components together.
 - `styles.css`: CSS entrypoint that imports organized style modules.
 - `styles/`: Split CSS files for base tokens, layout, sidebar, buttons, question UI, and responsive rules.
-- `types.ts`: Shared TypeScript types for questions, options, answer status, and persisted progress.
+- `types.ts`: Shared TypeScript types for subjects, questions, options, answer status, and persisted progress.
 - `data/`: Static generated question-bank data consumed by the frontend.
 - `hooks/`: React hooks for quiz progress and question navigation state.
 - `lib/`: Pure data and local persistence helpers.

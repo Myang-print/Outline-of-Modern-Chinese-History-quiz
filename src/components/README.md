@@ -5,6 +5,7 @@ React UI components for the quiz app.
 ## Structure
 
 - `Sidebar.tsx`: Chapter list and question-number status grid.
+- `SubjectSelector.tsx`: Subject selection cards and per-subject progress summary entry.
 - `Topbar.tsx`: Current chapter summary and reset action.
 - `QuestionPanel.tsx`: Question stem, options, answer submission, and navigation.
 - `AnalysisBox.tsx`: Explanation and exam-point display after answering.

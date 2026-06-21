@@ -25,4 +25,25 @@
   .question-panel h3 {
     font-size: 20px;
   }
+
+  .subject-page {
+    width: min(100% - 28px, 1040px);
+    padding: 32px 0;
+  }
+
+  .subject-hero h1 {
+    font-size: 30px;
+  }
+
+  .subject-card {
+    grid-template-columns: 1fr;
+  }
+
+  .subject-card__action {
+    grid-column: 1;
+  }
+
+  .subject-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

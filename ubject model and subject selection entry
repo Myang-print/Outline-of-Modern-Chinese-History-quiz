@@ -1,0 +1,87 @@
+[33mcommit 69736a325d1d20b850dc3b8f10d29eab671cb233[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 22:13:58 2026 +0800
+
+    Improve README and project documentation
+    
+    - Rewrite root README as a GitHub-facing project overview
+    - Clarify startup, build, preview, and verification commands
+    - Move question-bank pipeline details into dedicated docs
+
+[33mcommit 7b1778c0b85f0ebd0997a76222b5717424487346[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 21:58:09 2026 +0800
+
+    Fix local dev server binding on Windows
+    
+    - Bind Vite dev server to 127.0.0.1 instead of localhost
+    - Use port 4173 to avoid ::1:5173 permission issues
+    - Update README with the working local dev URL
+
+[33mcommit cdbbff2e7bf280c9b81e388be4b8a154ddcea0f5[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 21:54:55 2026 +0800
+
+    Clarify local app startup instructions
+    
+    - Add explicit local dev and preview scripts
+    - Document expected Vite URL output
+    - Add fallback preview workflow for port or permission issues
+
+[33mcommit 39d2ba16c2a77c8f63f4c68f2894ae75731c7845[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 20:47:19 2026 +0800
+
+    Organize application styles
+    
+    - Split global CSS into focused style modules
+    - Keep styles.css as the single CSS entrypoint
+    - Document style folder structure and update rules
+
+[33mcommit 4d29224909c916e3315c121711dc0714ead391e3[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 20:40:04 2026 +0800
+
+    Modularize question bank processing scripts
+    
+    - Split parser logic into script lib modules
+    - Separate parsing, validation, annotation merging, and output writing
+    - Keep generated data shape and CLI behavior unchanged
+
+[33mcommit 51aa1786ad936c67a4930a49e8d555dacd9b9699[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 20:27:59 2026 +0800
+
+    Split quiz UI into focused components
+    
+    - Move app composition into App.tsx
+    - Extract sidebar, topbar, question panel, and analysis box components
+    - Keep quiz state and behavior unchanged
+
+[33mcommit 04b0bd7e1bc1f7651eee5e28c94f6b628cfb12dd[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 20:21:26 2026 +0800
+
+    Document project directory structure
+    
+    - Add README guides for source, data, scripts, and docs folders
+    - Document generated data and annotation update rules
+    - Link folder guides from the root README
+
+[33mcommit 1a41f7278e94b58f7ec125942bc55eadefa054bd[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 20:12:35 2026 +0800
+
+    Add quiz explanations and exam point annotations
+
+[33mcommit 1e0c8e0b0cdb1b55d4c3b43740e8a9c0ce0684ef[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 19:47:31 2026 +0800
+
+    Improve gitignore and stabilize parser summary
+
+[33mcommit 64b4348bd3e0e1479088a7445348ddf1d7a6553a[m
+Author: Myang_print <1182470296@qq.com>
+Date:   Sun Jun 21 19:19:34 2026 +0800
+
+    Initial commit

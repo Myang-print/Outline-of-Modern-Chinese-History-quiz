@@ -5,7 +5,7 @@ CSS modules imported by `src/styles.css`.
 ## Files
 
 - `base.css`: Global reset, font stack, and design tokens.
-- `layout.css`: App shell, content region, and topbar layout.
+- `layout.css`: App shell, subject selector, content region, and topbar layout.
 - `sidebar.css`: Sidebar, chapter list, question grid, and status colors.
 - `buttons.css`: Shared button styles and button variants.
 - `question.css`: Question panel, options, feedback, analysis box, and navigation actions.

@@ -4,8 +4,8 @@ React hooks for app-level quiz state.
 
 ## Files
 
-- `useQuestionNavigation.ts`: Current chapter, current question, question list, and draft multiple-choice selection.
-- `useQuizProgress.ts`: Persisted answer progress, answer submission, chapter reset, and progress summaries.
+- `useQuestionNavigation.ts`: Current chapter, current question, current subject question list, and draft multiple-choice selection.
+- `useQuizProgress.ts`: Subject-scoped persisted answer progress, answer submission, chapter reset, and progress summaries.
 
 ## Update Rules
 

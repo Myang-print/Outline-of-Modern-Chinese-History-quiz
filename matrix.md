@@ -20,4 +20,8 @@
 | State hooks | Done | `src/hooks/` separates progress and navigation state |
 | Script modularization | Done | `scripts/lib/` separates parsing, validation, annotations, docs, and output |
 | Style organization | Done | `src/styles/` split by style responsibility |
+| Subject model | Done | `src/lib/subjects.ts` registers the first subject |
+| Subject entry page | Done | `src/components/SubjectSelector.tsx` provides the multi-subject app entry |
+| Subject-scoped progress | Done | `quiz-progress:${subjectId}:v1` localStorage key with legacy migration |
+| Multi-subject roadmap | Done | `docs/ROADMAP.md` documents the expansion path |
 | Build verification | Done | `npm run build` passed |

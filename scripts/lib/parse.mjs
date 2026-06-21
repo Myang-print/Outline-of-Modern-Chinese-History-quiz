@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { ANSWER_RE, CHAPTER_RE, OPTION_RE, SECTION_RE, TYPE_LABELS } from "./constants.mjs";
+import { ANSWER_RE, CHAPTER_RE, DEFAULT_SUBJECT_ID, OPTION_RE, SECTION_RE, TYPE_LABELS } from "./constants.mjs";
 import { compactText, isNoise, normalizeLine, slugify } from "./text.mjs";
 
 function splitOptions(text) {
@@ -51,6 +51,7 @@ function parseQuestion(block, context, indexInChapter) {
 
   return {
     id: `${slugify(context.chapter)}-${context.type}-${String(indexInChapter).padStart(3, "0")}`,
+    subjectId: DEFAULT_SUBJECT_ID,
     chapter: context.chapter,
     type: context.type,
     number: first.number,
@@ -124,4 +125,3 @@ export async function parseRawQuestionBank(rawFile) {
 
   return questions;
 }
-
