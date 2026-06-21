@@ -346,7 +346,6 @@ async function main() {
 
   const chapters = [...new Set(questions.map((question) => question.chapter))];
   const summary = {
-    generatedAt: new Date().toISOString(),
     source: "data/raw/中国近代史纲要题库-1.txt",
     totalQuestions: questions.length,
     totalIssues: issues.length,

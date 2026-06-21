@@ -1,8 +1,15 @@
 node_modules/
 dist/
 .env
+.env.*
 .DS_Store
 *.log
 *.tsbuildinfo
 .vite/
 .idea/
+.agents/
+.codex/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
