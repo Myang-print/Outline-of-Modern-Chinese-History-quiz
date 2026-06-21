@@ -12,8 +12,12 @@
 | Knowledge notes | Done | Generated under `docs/question-bank/` |
 | Chapter split files | Done | Generated under `data/processed/chapters/` |
 | Excluded questions | Done | 1 non-practice question excluded |
-| Explanation fields | In progress | First chapter manually annotated; remaining questions covered by generated base annotations |
+| Explanation fields | Done | 941 questions include explanations and exam points |
 | Quiz UI | Done | Sidebar, question area, answer feedback |
 | localStorage progress | Done | `src/lib/progress.ts` |
 | Topic reset | Done | Current chapter records can be cleared |
+| UI component split | Done | `src/App.tsx` and `src/components/` |
+| State hooks | Done | `src/hooks/` separates progress and navigation state |
+| Script modularization | Done | `scripts/lib/` separates parsing, validation, annotations, docs, and output |
+| Style organization | Done | `src/styles/` split by style responsibility |
 | Build verification | Done | `npm run build` passed |

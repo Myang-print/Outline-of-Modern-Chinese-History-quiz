@@ -32,6 +32,7 @@
 实现或修改后至少运行：
 
 ```bash
+npm run annotate:remaining
 npm run parse:bank
 npm run build
 ```

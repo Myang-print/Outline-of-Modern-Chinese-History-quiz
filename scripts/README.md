@@ -15,6 +15,8 @@ npm run annotate:remaining
 npm run parse:bank
 ```
 
+The browser app can be started with `npm run dev`, or previewed after build with `npm run preview:local`.
+
 ## Update Rules
 
 - Scripts are build-time tooling, not browser code.

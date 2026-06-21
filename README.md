@@ -25,7 +25,7 @@
 ## Folder Guides
 
 - [`src/`](src/README.md): frontend source structure and update rules.
-- [`src/components/`](src/components/README.md): planned component boundaries.
+- [`src/components/`](src/components/README.md): focused quiz UI components.
 - [`src/data/`](src/data/README.md): generated frontend data.
 - [`src/lib/`](src/lib/README.md): frontend helper modules.
 - [`src/styles/`](src/styles/README.md): split CSS structure and update rules.
@@ -42,10 +42,30 @@
 
 ```bash
 npm install
-npm run parse:bank
 npm run annotate:remaining
 npm run parse:bank
 npm run dev
+```
+
+`npm run dev` 正常启动后，终端会持续运行并显示类似：
+
+```text
+Local: http://localhost:5173/
+```
+
+打开这个地址即可看到 App。终端不会自动退出；要停止服务，按 `Ctrl + C`。
+
+如果 `npm run dev` 没有显示网址，或遇到端口/权限问题，可以使用生产预览：
+
+```bash
+npm run build
+npm run preview:local
+```
+
+然后打开：
+
+```text
+http://127.0.0.1:4174/
 ```
 
 生产构建：
@@ -54,11 +74,20 @@ npm run dev
 npm run build
 ```
 
+完整验证：
+
+```bash
+npm run annotate:remaining
+npm run parse:bank
+npm run build
+```
+
 ## 题库处理流程
 
 1. 将原始 `.txt` 放入 `data/raw/`。
-2. 运行 `npm run parse:bank`。
-3. 脚本会生成：
+2. 运行 `npm run annotate:remaining` 更新基础解析。
+3. 运行 `npm run parse:bank` 生成结构化数据。
+4. 脚本会生成：
    - `data/processed/question-bank.json`
    - `data/processed/chapters/*.json`
    - `data/processed/excluded-questions.json`
