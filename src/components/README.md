@@ -2,11 +2,7 @@
 
 React UI components for the quiz app.
 
-## Current State
-
-This directory is reserved for the upcoming UI split. The current interface still lives mostly in `src/main.tsx`.
-
-## Intended Structure
+## Structure
 
 - `Sidebar.tsx`: Chapter list and question-number status grid.
 - `Topbar.tsx`: Current chapter summary and reset action.
