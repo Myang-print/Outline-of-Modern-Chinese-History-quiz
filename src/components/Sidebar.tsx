@@ -1,4 +1,4 @@
-import type { AnswerStatus, ProgressState, Question } from "../types";
+import type { AnswerStatus, Question } from "../types";
 
 type SidebarProps = {
   chapters: string[];
@@ -7,8 +7,7 @@ type SidebarProps = {
   getChapterQuestions: (chapter: string) => Question[];
   onSelectChapter: (chapter: string) => void;
   onSelectQuestion: (questionId: string) => void;
-  progress: ProgressState;
-  statusFor: (question: Question, progress: ProgressState) => AnswerStatus;
+  statusForQuestion: (question: Question) => AnswerStatus;
   totalQuestions: number;
 };
 
@@ -19,8 +18,7 @@ export function Sidebar({
   getChapterQuestions,
   onSelectChapter,
   onSelectQuestion,
-  progress,
-  statusFor,
+  statusForQuestion,
   totalQuestions,
 }: SidebarProps) {
   return (
@@ -36,7 +34,7 @@ export function Sidebar({
       <nav className="chapter-list">
         {chapters.map((chapter) => {
           const chapterItems = getChapterQuestions(chapter);
-          const done = chapterItems.filter((question) => statusFor(question, progress) !== "unanswered").length;
+          const done = chapterItems.filter((question) => statusForQuestion(question) !== "unanswered").length;
           return (
             <section className="chapter-group" key={chapter}>
               <button
@@ -53,7 +51,7 @@ export function Sidebar({
                 <div className="question-grid">
                   {chapterItems.map((question, index) => (
                     <button
-                      className={`question-dot status-${statusFor(question, progress)} ${
+                      className={`question-dot status-${statusForQuestion(question)} ${
                         question.id === currentQuestionId ? "is-current" : ""
                       }`}
                       key={question.id}

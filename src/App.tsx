@@ -1,64 +1,33 @@
-import React from "react";
 import { Sidebar } from "./components/Sidebar";
 import { Topbar } from "./components/Topbar";
 import { QuestionPanel } from "./components/QuestionPanel";
 import { chapters, getQuestionsByChapter, questions } from "./lib/questions";
-import { clearChapterProgress, createProgressRecord, loadProgress, saveProgress } from "./lib/progress";
-import type { AnswerStatus, ProgressState, Question } from "./types";
-
-function statusFor(question: Question, progress: ProgressState): AnswerStatus {
-  return progress[question.id]?.status ?? "unanswered";
-}
+import { useQuestionNavigation } from "./hooks/useQuestionNavigation";
+import { useQuizProgress } from "./hooks/useQuizProgress";
 
 export function App() {
-  const [progress, setProgress] = React.useState<ProgressState>(() => loadProgress());
-  const [chapter, setChapter] = React.useState(() => chapters[0] ?? "");
-  const chapterQuestions = React.useMemo(() => getQuestionsByChapter(chapter), [chapter]);
-  const [questionId, setQuestionId] = React.useState(() => chapterQuestions[0]?.id ?? "");
-  const current = chapterQuestions.find((question) => question.id === questionId) ?? chapterQuestions[0] ?? questions[0];
-  const currentIndex = chapterQuestions.findIndex((question) => question.id === current?.id);
-  const [draftSelection, setDraftSelection] = React.useState<string[]>([]);
-
-  React.useEffect(() => {
-    if (!chapterQuestions.some((question) => question.id === questionId)) {
-      setQuestionId(chapterQuestions[0]?.id ?? "");
-    }
-  }, [chapterQuestions, questionId]);
-
-  React.useEffect(() => {
-    setDraftSelection(progress[current?.id ?? ""]?.selected ?? []);
-  }, [current?.id, progress]);
-
-  function updateProgress(next: ProgressState) {
-    setProgress(next);
-    saveProgress(next);
-  }
-
-  function answerQuestion(selected: string[]) {
-    if (!current) return;
-    updateProgress({
-      ...progress,
-      [current.id]: createProgressRecord(selected, current.answer),
-    });
-  }
+  const { answerQuestion, getChapterSummary, progress, resetChapter, statusForQuestion } = useQuizProgress(questions);
+  const {
+    chapter,
+    chapterQuestions,
+    current,
+    currentIndex,
+    draftSelection,
+    setChapter,
+    setQuestionId,
+    toggleDraftSelection,
+  } = useQuestionNavigation(progress);
 
   function handleOptionClick(label: string) {
     if (!current) return;
     if (current.type === "multiple") {
-      setDraftSelection((selected) =>
-        selected.includes(label) ? selected.filter((item) => item !== label) : [...selected, label].sort(),
-      );
+      toggleDraftSelection(label);
       return;
     }
-    answerQuestion([label]);
+    answerQuestion(current, [label]);
   }
 
-  function resetChapter() {
-    updateProgress(clearChapterProgress(progress, questions, chapter));
-  }
-
-  const answeredCount = chapterQuestions.filter((question) => statusFor(question, progress) !== "unanswered").length;
-  const correctCount = chapterQuestions.filter((question) => statusFor(question, progress) === "correct").length;
+  const { answeredCount, correctCount } = getChapterSummary(chapterQuestions);
   const currentRecord = current ? progress[current.id] : undefined;
   const selected = current?.type === "multiple" ? draftSelection : currentRecord?.selected ?? [];
 
@@ -71,8 +40,7 @@ export function App() {
         getChapterQuestions={getQuestionsByChapter}
         onSelectChapter={setChapter}
         onSelectQuestion={setQuestionId}
-        progress={progress}
-        statusFor={statusFor}
+        statusForQuestion={statusForQuestion}
         totalQuestions={questions.length}
       />
 
@@ -82,14 +50,14 @@ export function App() {
           chapter={chapter}
           correctCount={correctCount}
           questionCount={chapterQuestions.length}
-          onResetChapter={resetChapter}
+          onResetChapter={() => resetChapter(chapter)}
         />
 
         {current ? (
           <QuestionPanel
             currentRecord={currentRecord}
             draftSelection={draftSelection}
-            onAnswer={answerQuestion}
+            onAnswer={(selectedAnswer) => answerQuestion(current, selectedAnswer)}
             onOptionClick={handleOptionClick}
             onSelectQuestion={setQuestionId}
             question={current}

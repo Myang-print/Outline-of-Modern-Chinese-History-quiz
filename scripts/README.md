@@ -6,6 +6,7 @@ Node.js scripts for question-bank processing.
 
 - `parse-question-bank.mjs`: Parses the raw `.txt` question bank, filters known non-practice questions, merges annotations, validates output, and writes generated data/docs.
 - `generate-auto-annotations.mjs`: Generates baseline explanations and exam points for questions that do not have manual annotations.
+- `lib/`: Shared implementation modules for parsing, validation, annotation merging, document generation, and output writing.
 
 ## Commands
 
