@@ -1,5 +1,6 @@
 .question-panel,
 .empty-state {
+  width: min(100%, 920px);
   max-width: 920px;
   border: 1px solid var(--border);
   border-radius: 20px;

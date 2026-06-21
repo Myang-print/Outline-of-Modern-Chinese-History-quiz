@@ -1,5 +1,5 @@
 import React from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, RotateCcw } from "lucide-react";
 import type { AnswerStatus, Question } from "../types";
 
 type SidebarProps = {
@@ -9,6 +9,7 @@ type SidebarProps = {
   getChapterQuestions: (chapter: string) => Question[];
   onSelectChapter: (chapter: string) => void;
   onSelectQuestion: (questionId: string) => void;
+  onResetChapter: (chapter: string) => void;
   statusForQuestion: (question: Question) => AnswerStatus;
 };
 
@@ -19,6 +20,7 @@ export function Sidebar({
   getChapterQuestions,
   onSelectChapter,
   onSelectQuestion,
+  onResetChapter,
   statusForQuestion,
 }: SidebarProps) {
   const [expandedChapters, setExpandedChapters] = React.useState<Set<string>>(() => new Set([currentChapter]));
@@ -37,6 +39,12 @@ export function Sidebar({
       }
       return next;
     });
+  }
+
+  function updateRipple(event: React.MouseEvent<HTMLButtonElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--ripple-x", `${event.clientX - rect.left}px`);
+    event.currentTarget.style.setProperty("--ripple-y", `${event.clientY - rect.top}px`);
   }
 
   return (
@@ -80,6 +88,16 @@ export function Sidebar({
                       <span>{index + 1}</span>
                     </button>
                   ))}
+                  <button
+                    className="chapter-reset-button"
+                    onClick={() => onResetChapter(chapter)}
+                    onMouseEnter={updateRipple}
+                    onMouseMove={updateRipple}
+                    type="button"
+                  >
+                    <RotateCcw size={15} />
+                    <span>清空本专题记录</span>
+                  </button>
                 </div>
               ) : null}
             </section>

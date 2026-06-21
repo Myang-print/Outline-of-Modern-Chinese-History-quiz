@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 100vh;
+  height: 100%;
   padding: 20px 18px;
-  border-right: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
+  box-shadow: 0 22px 60px rgba(21, 31, 51, 0.18);
   transition:
     transform 220ms ease,
     opacity 220ms ease;
@@ -128,6 +130,62 @@
 .question-dot.is-current {
   border-color: #111827;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+.chapter-reset-button {
+  position: relative;
+  grid-column: 4 / -1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  overflow: hidden;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 10px;
+  color: #374151;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(239, 246, 255, 0.9)),
+    #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  --ripple-x: 50%;
+  --ripple-y: 50%;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.chapter-reset-button::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    radial-gradient(circle at var(--ripple-x) var(--ripple-y), rgba(124, 58, 237, 0.22) 0, rgba(0, 194, 255, 0.12) 22%, transparent 46%);
+  opacity: 0;
+  transform: scale(0.2);
+  transition:
+    opacity 220ms ease,
+    transform 520ms ease;
+}
+
+.chapter-reset-button:hover {
+  border-color: rgba(124, 58, 237, 0.46);
+  color: #3b1c8f;
+  transform: translateY(-1px);
+}
+
+.chapter-reset-button:hover::before {
+  opacity: 1;
+  transform: scale(2.4);
+}
+
+.chapter-reset-button svg,
+.chapter-reset-button span {
+  position: relative;
+  z-index: 1;
 }
 
 .status-unanswered {

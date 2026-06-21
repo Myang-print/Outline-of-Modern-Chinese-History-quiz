@@ -12,16 +12,8 @@ import type { Subject } from "./types";
 
 export function App() {
   const [selectedSubjectId, setSelectedSubjectId] = React.useState<string | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const selectedSubject = selectedSubjectId ? getSubjectById(selectedSubjectId) : undefined;
-
-  React.useEffect(() => {
-    const media = window.matchMedia("(max-width: 980px)");
-    const syncSidebar = () => setIsSidebarOpen(!media.matches);
-    syncSidebar();
-    media.addEventListener("change", syncSidebar);
-    return () => media.removeEventListener("change", syncSidebar);
-  }, []);
 
   React.useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -45,9 +37,7 @@ export function App() {
         getProgressSummary={(subjectId) => summarizeSubjectProgress(loadProgress(subjectId))}
         onSelectSubject={(subjectId) => {
           setSelectedSubjectId(subjectId);
-          if (window.matchMedia("(max-width: 980px)").matches) {
-            setIsSidebarOpen(false);
-          }
+          setIsSidebarOpen(false);
         }}
         subjects={subjects}
       />
@@ -183,8 +173,8 @@ function SubjectQuiz({ isSidebarOpen, subject, onBackToSubjects, onToggleSidebar
   const selected = current?.type === "multiple" ? draftSelection : currentRecord?.selected ?? [];
 
   return (
-    <main className={`app-shell ${isSidebarOpen ? "" : "is-sidebar-collapsed"}`}>
-      {isSidebarOpen ? (
+    <main className={`app-shell ${isSidebarOpen ? "is-sidebar-open" : "is-sidebar-collapsed"}`}>
+      <div className="sidebar-layer" aria-hidden={!isSidebarOpen}>
         <Sidebar
           chapters={subjectChapters}
           currentChapter={chapter}
@@ -192,9 +182,12 @@ function SubjectQuiz({ isSidebarOpen, subject, onBackToSubjects, onToggleSidebar
           getChapterQuestions={getSubjectChapterQuestions}
           onSelectChapter={setChapter}
           onSelectQuestion={setQuestionId}
+          onResetChapter={resetChapter}
           statusForQuestion={statusForQuestion}
         />
-      ) : null}
+      </div>
+
+      {isSidebarOpen ? <button className="sidebar-scrim" onClick={onToggleSidebar} type="button" aria-label="收起侧边栏" /> : null}
 
       <section className="content">
         <Topbar
@@ -206,7 +199,6 @@ function SubjectQuiz({ isSidebarOpen, subject, onBackToSubjects, onToggleSidebar
           onToggleSidebar={onToggleSidebar}
           questionCount={chapterQuestions.length}
           subjectName={subject.name}
-          onResetChapter={() => resetChapter(chapter)}
         />
 
         {current ? (

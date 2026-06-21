@@ -1,35 +1,45 @@
 .app-shell {
-  display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
+  position: relative;
+  display: block;
   min-height: 100vh;
 }
 
-.app-shell.is-sidebar-collapsed {
-  grid-template-columns: minmax(0, 1fr);
-}
-
 .content {
+  display: grid;
+  justify-items: center;
   min-width: 0;
   padding: 32px;
 }
 
 .topbar {
+  width: min(100%, 920px);
   display: grid;
-  grid-template-columns: minmax(220px, auto) minmax(280px, 1fr) minmax(180px, 320px);
+  grid-template-columns: minmax(230px, auto) minmax(170px, 280px) minmax(220px, 1fr);
   align-items: center;
-  gap: 18px;
+  gap: 14px;
+  justify-self: center;
   margin-bottom: 24px;
 }
 
-.topbar-progress {
+.topbar-heading {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 14px;
+  flex: 0 1 auto;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.topbar-detail-row {
+  display: contents;
+}
+
+.topbar-progress {
+  display: contents;
   min-width: 0;
 }
 
 .topbar h2 {
+  grid-column: 3;
   margin: 0;
   font-size: 22px;
   line-height: 1.25;
@@ -37,16 +47,26 @@
 }
 
 .subject-home-button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-self: start;
   gap: 10px;
+  min-height: 56px;
   min-width: 0;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: 16px;
-  padding: 6px;
+  padding: 6px 12px 6px 8px;
   color: var(--text);
-  background: transparent;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(247, 250, 255, 0.9)) padding-box,
+    radial-gradient(circle at 12% 18%, rgba(255, 45, 85, 0.42), transparent 30%),
+    radial-gradient(circle at 48% 8%, rgba(124, 58, 237, 0.5), transparent 36%),
+    radial-gradient(circle at 92% 82%, rgba(0, 194, 255, 0.46), transparent 34%),
+    linear-gradient(135deg, #ff2d55, #7c3aed 48%, #00c2ff) border-box;
+  box-shadow:
+    inset 0 0 28px rgba(255, 255, 255, 0.72),
+    0 12px 30px rgba(21, 31, 51, 0.08);
   cursor: pointer;
   text-align: left;
   transition:
@@ -54,8 +74,25 @@
     transform 180ms ease;
 }
 
+.subject-home-button svg {
+  display: grid;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 7px;
+  color: #344054;
+  background: rgba(241, 245, 249, 0.92);
+}
+
+.subject-home-button:hover svg {
+  background: #e2e8f0;
+}
+
 .subject-home-button:hover {
-  background: rgba(255, 255, 255, 0.78);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(239, 246, 255, 0.94)),
+    var(--surface);
   transform: translateY(-1px);
 }
 
@@ -74,13 +111,9 @@
 }
 
 .subject-home-title {
-  display: block;
-}
-
-.subject-home-title {
   overflow: hidden;
   color: var(--text);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   line-height: 1.25;
   text-overflow: ellipsis;
@@ -88,12 +121,12 @@
 }
 
 .chapter-badge {
-  justify-self: end;
+  min-height: 56px;
   max-width: 100%;
   overflow: hidden;
   border: 1px solid rgba(124, 58, 237, 0.18);
   border-radius: 16px;
-  padding: 11px 14px;
+  padding: 0 14px;
   color: #253150;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(219, 234, 254, 0.9) 42%, rgba(237, 233, 254, 0.96)),
@@ -101,16 +134,70 @@
   box-shadow: 0 14px 34px rgba(21, 31, 51, 0.08);
   cursor: pointer;
   font: inherit;
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 900;
   line-height: 1.35;
-  text-align: right;
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   transition:
     transform 180ms ease,
     border-color 180ms ease,
     box-shadow 180ms ease;
+}
+
+.progress-track {
+  position: relative;
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(124, 58, 237, 0.18);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(226, 232, 240, 0.88)),
+    #eef2ff;
+  box-shadow: inset 0 1px 4px rgba(21, 31, 51, 0.12);
+}
+
+.progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, #ff2d55 0%, #7c3aed 52%, #00c2ff 100%);
+  box-shadow: 0 0 18px rgba(124, 58, 237, 0.34);
+  transition: width 240ms ease;
+}
+
+.sidebar-layer {
+  position: fixed;
+  z-index: 45;
+  inset: 18px auto 18px 18px;
+  width: 300px;
+  pointer-events: none;
+  transform: translateX(-330px);
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease;
+  opacity: 0;
+}
+
+.app-shell.is-sidebar-open .sidebar-layer {
+  pointer-events: auto;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.sidebar-scrim {
+  position: fixed;
+  z-index: 35;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: default;
 }
 
 .chapter-badge:hover {
