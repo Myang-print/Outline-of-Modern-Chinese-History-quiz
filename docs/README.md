@@ -4,6 +4,8 @@ Project documentation and generated review materials.
 
 ## Structure
 
+- `USAGE.md`: Local startup, preview, build, and verification commands.
+- `QUESTION_BANK_PIPELINE.md`: Raw data, annotation, generated output, and maintenance workflow.
 - `question-bank/`: Generated question-bank reports, review drafts, and study notes.
 
 ## Update Rules

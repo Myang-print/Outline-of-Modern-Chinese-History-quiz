@@ -1,61 +1,63 @@
-# 近代史纲要刷题 App
+# 📚 中国近现代史纲要刷题 App
 
-一个本地运行的刷题 Web App，用于练习《近代史纲要》题库。App 读取处理后的题库 JSON，不在浏览器里直接解析原始 `.txt`。
+一个本地运行的《中国近现代史纲要》刷题 Web App。项目把 PDF 转出的 `.txt` 题库处理为结构化 JSON，并提供按章节刷题、即时判题、解析展示和本地作答记录保存。
 
-## 功能
+## ✨ Features
 
-- 按章节/专题浏览题目。
-- 支持单选题、多选题、判断题。
-- 作答后判断正误，错误时显示正确答案。
-- 左侧题号用三种颜色标记状态：未做、正确、错误。
-- 作答记录保存在浏览器 `localStorage`，关闭后仍保留。
-- 支持清空当前专题作答记录。
+- 🧭 按章节/专题浏览题目。
+- ✅ 支持单选题、多选题、判断题。
+- ⚡ 作答后即时判断正误，答错时显示正确答案。
+- 🎯 答题后展示简明解析和考试核心考点。
+- 🎨 左侧题号用三种颜色标记状态：未做、正确、错误。
+- 💾 作答记录保存在浏览器 `localStorage`，刷新或关闭后仍保留。
+- ♻️ 支持清空当前专题作答记录。
 
-## 目录
+## 🧱 Requirements
 
-- `data/raw/`：原始 `.txt` 题库副本。
-- `data/annotations/`：按批次维护的题目解析和核心考点。
-- `data/processed/`：解析后的结构化题库 JSON 和汇总。
-- `docs/question-bank/`：分章检查报告与考前注意知识点。
-- `scripts/parse-question-bank.mjs`：题库解析脚本。
-- `src/`：React + Vite 前端源码。
-- `matrix.md`：实现记录矩阵。
-- `AGENT.md`：后续开发约束与接手说明。
+- Node.js 18+。
+- npm，通常会随 Node.js 一起安装。
+- Chrome、Edge、Firefox 等现代浏览器。
 
-## Folder Guides
+## 🚀 Quick Start
 
-- [`src/`](src/README.md): frontend source structure and update rules.
-- [`src/components/`](src/components/README.md): focused quiz UI components.
-- [`src/data/`](src/data/README.md): generated frontend data.
-- [`src/lib/`](src/lib/README.md): frontend helper modules.
-- [`src/styles/`](src/styles/README.md): split CSS structure and update rules.
-- [`scripts/`](scripts/README.md): question-bank processing scripts.
-- [`data/`](data/README.md): raw, annotation, and processed data workflow.
-- [`data/raw/`](data/raw/README.md): raw source file rules.
-- [`data/annotations/`](data/annotations/README.md): explanation and exam-point annotation rules.
-- [`data/processed/`](data/processed/README.md): generated data outputs.
-- [`data/processed/chapters/`](data/processed/chapters/README.md): per-chapter generated JSON.
-- [`docs/`](docs/README.md): documentation structure.
-- [`docs/question-bank/`](docs/question-bank/README.md): generated review and study documents.
-
-## 使用
+第一次使用：
 
 ```bash
 npm install
-npm run annotate:remaining
-npm run parse:bank
 npm run dev
 ```
 
-`npm run dev` 正常启动后，终端会持续运行并显示类似：
+终端出现下面的地址后，用浏览器打开：
 
 ```text
-Local: http://127.0.0.1:4173/
+http://127.0.0.1:4173/
 ```
 
-打开这个地址即可看到 App。终端不会自动退出；要停止服务，按 `Ctrl + C`。
+`npm run dev` 会持续运行本地开发服务器。停止服务时，在终端按 `Ctrl + C`。
 
-项目显式使用 `127.0.0.1:4173`，避免部分 Windows 环境把 `localhost` 解析到 IPv6 `::1:5173` 后出现 `EACCES`。如果 `npm run dev` 仍然遇到端口/权限问题，可以使用生产预览：
+日常使用只需要 `npm install` 和 `npm run dev`。下面的其他命令用于构建检查、题库再生成或故障备用。
+
+## 🧩 Common Commands
+
+
+| Command                      | What it does                                | When to use                    |
+| ---------------------------- | ------------------------------------------- | ------------------------------ |
+| `npm install`                | 安装项目依赖                                | 第一次拉取项目后运行一次       |
+| `npm run dev`                | 启动本地开发服务器                          | 平时打开 App、开发和手动体验   |
+| `npm run build`              | 生成生产构建并做 TypeScript 检查            | 提交前确认项目能正式构建       |
+| `npm run preview:local`      | 预览`npm run build` 生成的生产版本          | `dev` 不可用或想检查构建产物时 |
+| `npm run annotate:remaining` | 为未精写题目生成基础解析                    | 原始题库或注释规则变化后       |
+| `npm run parse:bank`         | 从题库源数据生成 App 使用的 JSON 和复核文档 | 修改题库、注释或解析脚本后     |
+
+### 🏗️ What is a production build?
+
+`npm run build` 会检查 TypeScript 类型，并把源码打包成可以部署或预览的静态文件，输出到 `dist/`。
+
+平时开发和刷题用 `npm run dev`。准备提交代码、确认项目能被正式打包时，再运行 `npm run build`。
+
+### 🧯 Backup Preview
+
+如果 `npm run dev` 在你的 Windows 环境中遇到端口或权限问题，使用备用预览流程：
 
 ```bash
 npm run build
@@ -68,13 +70,9 @@ npm run preview:local
 http://127.0.0.1:4174/
 ```
 
-生产构建：
+## 🧪 Verification
 
-```bash
-npm run build
-```
-
-完整验证：
+提交代码前建议运行：
 
 ```bash
 npm run annotate:remaining
@@ -82,29 +80,53 @@ npm run parse:bank
 npm run build
 ```
 
-## 题库处理流程
+完整验证会重复跑一遍题库生成和前端构建，是为了确认“从源数据到可运行 App”的整条链路没有断。它和日常启动不同，不是每次打开 App 都必须执行。
 
-1. 将原始 `.txt` 放入 `data/raw/`。
-2. 运行 `npm run annotate:remaining` 更新基础解析。
-3. 运行 `npm run parse:bank` 生成结构化数据。
-4. 脚本会生成：
-   - `data/processed/question-bank.json`
-   - `data/processed/chapters/*.json`
-   - `data/processed/excluded-questions.json`
-   - `data/processed/summary.json`
-   - `src/data/questionBank.json`
-   - `docs/question-bank/*.md`
+这三步分别确认：
 
-解析脚本只做格式与一致性检查，不自动改答案。
-解析和核心考点从 `data/annotations/*.json` 合并进最终题库；可以按章节分批补充。
-精写解析文件优先保留，`npm run annotate:remaining` 会为未精写的章节生成基础解析和核心考点。
+- 解析/考点注释可以生成。
+- 题库 JSON、分章数据和复核文档可以生成。
+- 前端 TypeScript 和生产构建通过。
 
-## 分章复核
+## 🗂️ Project Structure
 
-- `data/processed/chapters/`：按章节拆分后的结构化 JSON，适合程序处理或逐章人工校对。
-- `docs/question-bank/*-review.md`：按章节生成的题干、选项、答案复核稿。
-- `docs/question-bank/*-check.md`：格式与一致性检查报告。
-- `docs/question-bank/*-notes.md`：基于题库提炼的考前注意知识点。
-- `data/processed/excluded-questions.json`：被明确排除的非练习题，例如课程属性说明题。
-- `data/annotations/`：人工维护的解析批次文件，字段为 `explanation` 和 `examPoints`。
-- `scripts/generate-auto-annotations.mjs`：为尚未精写的题目生成基础解析；后续精修时可以用章节注释文件替换。
+```text
+.
+├─ src/                 # React + Vite frontend
+├─ scripts/             # Question-bank processing scripts
+├─ data/                # Raw, annotation, and generated data
+├─ docs/                # Usage docs and generated question-bank documents
+├─ AGENT.md             # Development rules for future agents
+└─ matrix.md            # Implementation status matrix
+```
+
+Detailed folder guides:
+
+- [`src/`](src/README.md): frontend source structure and update rules.
+- [`src/components/`](src/components/README.md): focused quiz UI components.
+- [`src/data/`](src/data/README.md): generated frontend data.
+- [`src/lib/`](src/lib/README.md): frontend helper modules.
+- [`src/styles/`](src/styles/README.md): split CSS structure and update rules.
+- [`scripts/`](scripts/README.md): question-bank processing scripts.
+- [`data/`](data/README.md): raw, annotation, and processed data workflow.
+- [`docs/`](docs/README.md): documentation structure.
+
+## 📖 More Documentation
+
+- [Usage Guide](docs/USAGE.md): local startup, build, preview, and command explanations.
+- [Question Bank Pipeline](docs/QUESTION_BANK_PIPELINE.md): raw text, annotations, generated JSON, reports, and review files.
+- [Implementation Matrix](matrix.md): current implementation status.
+
+## 📌 Current Data Status
+
+- 941 practice questions.
+- 13 chapters/topics.
+- 941 questions include explanations and exam points.
+- 1 non-practice course-description question is excluded.
+- 0 format/consistency issues in the latest generated summary.
+
+## 📝 Notes
+
+- The app reads generated JSON; it does not parse raw `.txt` in the browser.
+- Generated files under `data/processed/`, `src/data/`, and `docs/question-bank/` should be regenerated through scripts instead of edited by hand.
+- `npm run dev` binds to `127.0.0.1:4173` to avoid Windows environments where `localhost` resolves to IPv6 `::1` and fails with `EACCES`.
